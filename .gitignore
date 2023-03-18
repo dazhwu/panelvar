@@ -1,0 +1,5 @@
+build
+pypvar/.idea/
+pypvar/__pycache__/
+pypvar/.vs/
+pypvar/_deps/

@@ -1,0 +1,5 @@
+numpy
+pandas
+prettytable
+pybind11
+scipy
