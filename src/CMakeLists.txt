@@ -39,4 +39,4 @@ set_target_properties(pvar_module PROPERTIES PREFIX "")
 
 set_target_properties(pvar_module PROPERTIES OUTPUT_NAME "pvar_module")
 
-install(TARGETS pvar_module DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../pypvar/)
+install(TARGETS pvar_module DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../panelvar/)

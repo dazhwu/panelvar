@@ -1,6 +1,6 @@
 import numpy as np
 from scipy import linalg
-from pypvar.dynamic_panel_model import dynamic_panel_model
+from panelvar.dynamic_panel_model import dynamic_panel_model
 
 def PAR1_matrix(m: dynamic_panel_model):
 

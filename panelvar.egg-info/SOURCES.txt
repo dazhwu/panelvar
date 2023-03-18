@@ -1,3 +1,4 @@
+LICENSE
 MANIFEST.in
 setup.py
 panelvar.egg-info/PKG-INFO

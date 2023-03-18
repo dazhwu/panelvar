@@ -1,5 +1,6 @@
 build
-pypvar/.idea/
-pypvar/__pycache__/
-pypvar/.vs/
-pypvar/_deps/
+panelvar/.idea/
+panelvar/__pycache__/
+panelvar/.vs/
+panelvar/_deps/
+dist

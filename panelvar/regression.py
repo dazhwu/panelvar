@@ -1,17 +1,17 @@
 import numpy as np
 
-import pypvar.pvar_module as pvar_module
+import panelvar.pvar_module as pvar_module
 
 import time
 import warnings
 
-import pypvar.dynamic_panel_model as dynm
+import panelvar.dynamic_panel_model as dynm
 from pandas import DataFrame
-from pypvar.dynamic_panel_model import dynamic_panel_model
+from panelvar.dynamic_panel_model import dynamic_panel_model
 
-from pypvar.model_summary import model_summary
-from pypvar.panel_data import panel_data
-from pypvar.irf import oirf
+from panelvar.model_summary import model_summary
+from panelvar.panel_data import panel_data
+from panelvar.irf import oirf
 from sys import exit
 
 

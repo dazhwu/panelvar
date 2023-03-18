@@ -15,6 +15,7 @@ Classifier: Programming Language :: Python :: Implementation :: CPython
 Classifier: Programming Language :: C++
 Requires-Python: >=3.10.0
 Description-Content-Type: text/markdown
+License-File: LICENSE
 
 A package to estimate penel vector autoregression models.
 

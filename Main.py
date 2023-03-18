@@ -1,6 +1,6 @@
 # import vaex as va
 import pandas as pd
-from  pypvar import regression
+from  panelvar import regression
 
 
 
