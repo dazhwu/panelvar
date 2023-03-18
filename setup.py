@@ -18,17 +18,14 @@ URL = 'https://github.com/dazhwu/panelvar'
 EMAIL = 'wudz800@gmail.com'
 AUTHOR = 'Dazhong Wu'
 REQUIRES_PYTHON = '>=3.10.0'
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'numpy', 'scipy', 'prettytable', 'pandas', 'pybind11'
+    'numpy', 'scipy', 'prettytable', 'pandas', 'pybind11', 'matplotlib'
 ]
 
 # What packages are optional?
-EXTRAS = {
-    # 'fancy feature': ['django'],
-}
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -107,7 +104,6 @@ setup(
     setup_requires=["pybind11"],      
     
     install_requires=REQUIRED,
-    extras_require=EXTRAS,
     include_package_data=True,
     
     license='MIT',

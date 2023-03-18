@@ -13,14 +13,15 @@ project(pvar_module VERSION 0.1.0)
 set(CMAKE_CXX_FLAGS "-Wall -O3 -m64 -fopenmp  -mavx -mfma  -march=native ")
 #-m64 -fopenmp -march=native  -mavx2 -DNDEBUG
 
+set (PYBIND11_PYTHON_VERSION "3.11")
 
 # Include dir
 include_directories(/usr/local/include)
 include_directories(/usr/include/eigen3)
 include_directories(/usr/include/eigen3/unsupported)
 
-#include_directories(/usr/include/python3.9)
-#include_directories(/usr/local/lib/python3.9/dist-packages/pybind11/include)
+include_directories(/usr/include/python3.11)
+include_directories(/usr/local/lib/python3.11/dist-packages/pybind11/include)
 include_directories(/usr/include/python3.10)
 include_directories(/usr/local/lib/python3.10/dist-packages/pybind11/include)
 
