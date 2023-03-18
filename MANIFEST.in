@@ -1,2 +1,2 @@
-include pydynpd/*.so
-include pydynpd/*.pyd
+include panelvar/*.so
+include panelvar/*.pyd
