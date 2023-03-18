@@ -4,3 +4,4 @@ panelvar/__pycache__/
 panelvar/.vs/
 panelvar/_deps/
 dist
+*.png
