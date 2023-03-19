@@ -88,6 +88,7 @@ struct MMSC_LU {
 
 struct basic_info {
     string model_name;
+    vector<string> identifiers;
     vector<string> dep;
     vector<string> indep;
     int N;
@@ -107,7 +108,7 @@ struct basic_info {
     struct MMSC_LU mmsc_lu;
     basic_info();
 
-	basic_info(int _N, int _T, int _num_obs, int _num_instr, int _num_dep, int _num_dep_lags, int _num_indep, int _diff_width, int _x_height, int _max_obs, int _min_obs, double _avg_obs, vector<regular_variable> &dep_indep, model_options &options);
+	basic_info(int _N, int _T, int _num_obs, int _num_instr, int _num_dep, int _num_dep_lags, int _num_indep, int _diff_width, int _x_height, int _max_obs, int _min_obs, double _avg_obs, vector<regular_variable> &dep_indep, vector<string> &identifiers, model_options &options);
 };
 
 

@@ -52,7 +52,7 @@ struct df_info get_info(model_options options, model m) {
 	return tbr;
 }
 
-vector<returned_result> prepare_data(Ref <RowMatrixXd> pdata,
+vector<returned_result> prepare_data(vector<string> &identifiers, Ref <RowMatrixXd> pdata,
                                      vector<int> &dimensions,
                                      vector<string> &df_cols,
                                      vector<string> &col_timedumm, int ahead, int num_draws) {
@@ -85,7 +85,7 @@ vector<returned_result> prepare_data(Ref <RowMatrixXd> pdata,
 				options.level, options.transformation, options.collapse);
 		na_records = VectorXi::Zero(final_xy_tables["Cy"].rows());
 		struct basic_info model_info =
-				generate_model_info(N, T, z_table, na_records,z_information, the_models[m]);
+				generate_model_info(N, T, z_table, na_records,z_information, the_models[m], identifiers);
 
 		// //saveData("z.csv", z_table);
 		returned_result model_result;
@@ -142,7 +142,7 @@ void update_time_dummies(vector<string> &col_timedumm, struct df_info &info,
 }
 
 struct basic_info generate_model_info(int N, int T, Ref <RowMatrixXd> z_table, VectorXi &na_records,
-                                      struct z_info &z_information, model &m) {
+                                      struct z_info &z_information, model &m, vector<string> &identifiers) {
 	int num_obs, max_obs, min_obs;
 	double avg_obs;
 	std::tie(num_obs, max_obs, min_obs, avg_obs) =
@@ -155,7 +155,7 @@ struct basic_info generate_model_info(int N, int T, Ref <RowMatrixXd> z_table, V
 
 	struct basic_info model_info(N, T, num_obs, z_information.num_instr, num_dep, num_dep_lags,
 	                             num_indep, z_information.diff_width, z_information.z_width,max_obs,
-	                             min_obs, avg_obs, m.dep_indep, options);
+	                             min_obs, avg_obs, m.dep_indep, identifiers, options);
 
 	return model_info;
 }

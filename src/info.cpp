@@ -17,7 +17,7 @@ basic_info::basic_info(){
 	
 }
 
-basic_info::basic_info(int _N, int _T, int _num_obs, int _num_instr, int _num_dep, int _num_dep_lags, int _num_indep, int _diff_width, int _x_height, int _max_obs, int _min_obs, double _avg_obs, vector<regular_variable> &dep_indep, model_options &options)
+basic_info::basic_info(int _N, int _T, int _num_obs, int _num_instr, int _num_dep, int _num_dep_lags, int _num_indep, int _diff_width, int _x_height, int _max_obs, int _min_obs, double _avg_obs, vector<regular_variable> &dep_indep, vector<string> &_identifiers, model_options &options)
 {
 	N = _N;
 	T = _T;
@@ -32,6 +32,11 @@ basic_info::basic_info(int _N, int _T, int _num_obs, int _num_instr, int _num_de
 	min_obs = _min_obs;
 	avg_obs = _avg_obs;
 	mmsc_lu=MMSC_LU();
+	for (std::size_t i=0, max=_identifiers.size(); i<max; ++i)
+	{
+	    identifiers.push_back(_identifiers[i]);
+
+	}
 	for (std::size_t i = 0, max = dep_indep.size(); i < max; ++i)
 	{
 		if (i < num_dep)

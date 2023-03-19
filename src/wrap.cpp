@@ -15,18 +15,6 @@
 
 namespace py = pybind11;
 
-/*
-
-struct _options {
-    int steps = 2;
-    bool level = true;
-    bool beginner = false;
-    bool timedumm = false;
-    bool collapse = false;
-    string mmsc = "bic";
-    string transformation = "fd";
-
-*/
 
 PYBIND11_MODULE(pvar_module, m)
 {
@@ -62,8 +50,9 @@ PYBIND11_MODULE(pvar_module, m)
 
     py::class_<basic_info>(m, "basic_info")
         .def(py::init<>())
-        .def(py::init<int, int, int, int, int, int, int,int,int, int, int, double, vector<regular_variable> &, model_options &>())
+        .def(py::init<int, int, int, int, int, int, int,int,int, int, int, double, vector<regular_variable> &, vector<string> &, model_options &>())
         .def_readwrite("model_name", &basic_info::model_name)
+        .def_readwrite("identifiers", &basic_info::identifiers)
         .def_readwrite("dep", &basic_info::dep)
         .def_readwrite("indep", &basic_info::indep)
         .def_readwrite("N", &basic_info::N)

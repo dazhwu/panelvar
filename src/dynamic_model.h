@@ -22,7 +22,7 @@ using Eigen::VectorXi;
 
 struct df_info get_info(model_options options, model m);
 
-vector<returned_result> prepare_data(Ref <RowMatrixXd>,    vector<int> &,  vector<string> &, vector<string> &, int, int);
+vector<returned_result> prepare_data(vector<string> &,Ref <RowMatrixXd>,    vector<int> &,  vector<string> &, vector<string> &, int, int);
 
 void update_time_dummies(vector<string> &col_timedumm, struct df_info &info,
                          model &m);
@@ -30,7 +30,7 @@ void process_residual(returned_result &, VectorXi &);
 
 void handle_tables(Ref<RowMatrixXd> pdata, Ref<RowMatrixXd> fd_data, model &m, vector<string> &df_cols, df_info info);
 
-struct basic_info generate_model_info(int N, int T, Ref<RowMatrixXd> z_table, VectorXi &na_records, struct z_info &z_information, model &m);
+struct basic_info generate_model_info(int N, int T, Ref<RowMatrixXd> z_table, VectorXi &na_records, struct z_info &z_information, model &m, vector<string> &);
 
 void get_gmm_tables(Ref<RowMatrixXd> , Ref<RowMatrixXd> ,vector <gmm_var> &, vector <regular_variable> &,
                     vector <gmm_var> &, vector<string> &,bool level) ;

@@ -82,15 +82,7 @@ class model_summary(object):
             str_toprint = str_toprint + 'Not all the eigenvalues lie inside the unit circle.' + '\n'
             str_toprint = str_toprint + 'PVAR does not satisfy stability condition.' +'\n'
 
-        # for i in range(len(model.AR_list)):
-        #     the_AR = model.AR_list[i]
-        #     AR = the_AR.AR
-        #     P_value = the_AR.P_value
-        #
-        #     str_toprint = str_toprint + 'Arellano-Bond test for AR(' + str(
-        #         i + 1) + ') in first differences: z = ' + "{:.2f}".format(AR) + ' Pr > z =' + '{:.3f}'.format(
-        #         P_value) + '\n'
-        #
+
         return (str_toprint)
 
     def regression_table(self, model):
@@ -111,26 +103,6 @@ class model_summary(object):
                 p = reg_table['p_value'][j]
                 sig = reg_table['sig'][j]
                 r_table.add_row([" ", var_name, coeff, stderr, z, p, sig])
-
-        #
-        #
-        #
-        # r_table.field_names = [dep_name, "coef.", "Corrected Std. Err.", "z", "P>|z|", " "]
-        #
-        # r_table.float_format = '.7'
-        # regression_table = model.regression_table
-        # # , "z", "P>|z|", "[95% Conf. Interval]" ]
-        # num_indep = len(regression_table.index)
-        #
-        # for i in range(num_indep):
-        #     var_name = regression_table['variable'][i]
-        #     coeff = regression_table['coefficient'][i]
-        #     stderr = regression_table['std_err'][i]
-        #
-        #     z = regression_table['z_value'][i]
-        #     p = regression_table['p_value'][i]
-        #     sig = regression_table['sig'][i]
-        #     r_table.add_row([var_name, coeff, stderr, z, p, sig])
 
         return r_table.get_string()
 

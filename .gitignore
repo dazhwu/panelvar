@@ -7,3 +7,4 @@ panelvar/.vs/
 panelvar/_deps/
 dist
 *.png
+.idea
