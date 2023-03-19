@@ -333,11 +333,10 @@ get_final_xy_systemGMM(Ref <RowMatrixXd> Dx, Ref <RowMatrixXd> Dy,
 				Cx.middleRows(height_total * i, height_total);
 		temp_x.block(0, 0, Dcut_height, x_i.cols()) = Dx_i.block(Dcut[0], 0, Dcut_height, x_i.cols());;
 		temp_x.block(Dcut_height, 0, height_total - Dcut_height, x_i.cols()) = x_i.block(cut[0], 0, height_total - Dcut_height, x_i.cols());
-		if (options.constant) {
-			temp_x.block(0, width, Dcut_height, 1) = RowMatrixXd::Zero(Dcut_height, 1);
-			temp_x.block(Dcut_height, width, height_total - Dcut_height, 1) =
-					RowMatrixXd::Ones(height_total - Dcut_height, 1);
-
+		if (options.constant) {			
+			temp_x.block(0, width-1, Dcut_height, 1) = RowMatrixXd::Zero(Dcut_height, 1);			
+			temp_x.block(Dcut_height, width-1, height_total - Dcut_height, 1) =
+					RowMatrixXd::Ones(height_total - Dcut_height, 1);		
 		}
 		if (transformation == "fod") {
 			temp_y.row(0) = RowMatrixXd::Constant(1, num_dep, NAN);

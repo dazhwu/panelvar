@@ -11,7 +11,7 @@ from panelvar.dynamic_panel_model import dynamic_panel_model
 
 from panelvar.model_summary import model_summary
 from panelvar.panel_data import panel_data
-from panelvar.irf import oirf
+#from panelvar.irf import oirf
 from sys import exit
 
 

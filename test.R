@@ -2,7 +2,7 @@ library(panelvar)
 data(abdata)
 p1 <-pvargmm(
   dependent_vars = c("n","w","k"),
-  lags = 1,
+  lags = 2,
   
   #exog_vars=c("k"),
   transformation = "fd",
