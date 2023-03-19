@@ -1,4 +1,5 @@
 build
+src/build/
 panelvar/.idea/
 panelvar/__pycache__/
 panelvar/.vs/
