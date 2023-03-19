@@ -19,10 +19,6 @@ import sys
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-
-
-
-
 class pvar:
 
     def __init__(self, dep, df:DataFrame, identifiers:list, exog="", lags=1, gmm="", options="", ahead=10,draw=100):
@@ -35,9 +31,9 @@ class pvar:
             print('no dependent variable specified')
             exit()
 
-        # if lags < 1:
-        #     print('argument lags needs to be at least 1')
-        #     exit()
+        if lags < 1:
+            print('argument lags needs to be at least 1')
+            exit()
         pdata = panel_data(df, identifiers)
         try:
             (names, model_options) = pvar_module.process_command(pdata.T, dep, lags, exog, gmm, options, df.columns)
@@ -49,27 +45,19 @@ class pvar:
 
         self.list_models = pvar_module.prepare_data(pdata.data, [pdata.N, pdata.T], pdata.cols, pdata.col_timedumm, ahead, draw)
 
-
-
         self._good_models = []
         self._bad_models = []
+        
         for m in self.list_models:
-        #     #print(m.hansen.test_value)
-
+                    
             new_model=dynamic_panel_model(identifiers, m.dep_indep, m.regression_result,   m.model_info, m.hansen, m.stability, m.irf, m.model_options,  m.command_str)
-            #print(oirf(new_model,3))
-            #
-            #self.form_results(new_model)
-
-        #
-        #     if (options.beginner==True) & (len(list_models)>=2):
+            
             if (self.check_model(new_model)==True):
-
                 self._good_models.append(new_model)
             else:
                 self._bad_models.append(new_model)
 
-
+        
         for m in self._good_models:
             self.form_results(m)
             print(m.command_str)
@@ -87,10 +75,6 @@ class pvar:
         # if len(self._bad_models) >= 1:
         #     print('\nThe following model(s) did not pass specification tests:')
         #     ms.print_bad_list(self._bad_models)
-
-    
-
- 
 
     def form_results(self, model):
   

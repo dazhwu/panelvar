@@ -13,7 +13,7 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = 'panelvar'
-DESCRIPTION = 'A package to estimate penel vector autoregression models.'
+DESCRIPTION = 'A Python package to estimate penel vector autoregression models.'
 URL = 'https://github.com/dazhwu/panelvar'
 EMAIL = 'wudz800@gmail.com'
 AUTHOR = 'Dazhong Wu'
