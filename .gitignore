@@ -1,4 +1,5 @@
 build
+panelvar.egg-info
 src/build/
 panelvar/.idea/
 panelvar/__pycache__/
