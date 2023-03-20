@@ -407,11 +407,11 @@ prepare_reg(Ref <RowMatrixXd> z_list, Ref <RowMatrixXd> Cx, Ref <RowMatrixXd> Cy
 	// //saveData("before_x.csv", final_xy_tables["Diff_x"]);
 	if (transformation == "fod")
 		prepare_reg_fod(final_xy_tables["Diff_x"], final_xy_tables["Diff_y"]);
-	int start_row; //, end_row;
+	//int start_row; //, end_row;
 	// end_row = z_information.z_width;
-	start_row = 0;
-	if (level)
-		start_row = z_information.diff_width;  //count from the lower part if system GMM
+	// start_row = 0;
+	// if (level)
+	// 	start_row = z_information.diff_width;  //count from the lower part if system GMM
 
 	//#pragma omp parallel for reduction(+ : num_NA)
 
@@ -443,11 +443,12 @@ prepare_reg(Ref <RowMatrixXd> z_list, Ref <RowMatrixXd> Cx, Ref <RowMatrixXd> Cy
 		if (temp < min)
 			min = temp;
 	}
-	int width;
-	if (level)
-		width = z_information.level_width;
-	else
-		width = z_information.diff_width;
+	int width = z_information.diff_width;
+	// if (level)
+	// 	width = z_information.level_width;
+		
+	// else
+	// 	width = z_information.diff_width;
 	int nobs = width * N - num_NA;
 	int max_obs = width - min;
 	int min_obs = width - max;
