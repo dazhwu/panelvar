@@ -26,7 +26,7 @@ class model_list(object):
 
 class model_summary(object):
 
-    def print_summary(self, model):
+    def print_summary(self, model, reg_tables):
 
         if model.model_options.steps == 2:
             str_steps = 'two-step '
@@ -34,7 +34,7 @@ class model_summary(object):
             str_steps = 'one-step '
         else:
             
-            str_steps = str(model.actual_steps) + '-step '
+            str_steps = str(model.model_info.actual_steps) + '-step '
 
         if model.model_options.level:
             str_gmm = 'system GMM'
@@ -43,9 +43,9 @@ class model_summary(object):
 
         to_print = []
         # to_print.append(model.command_str)
-        to_print.append(' Dynamic panel-data estimation, ' + str_steps + str_gmm)
+        to_print.append(' Dynamic Panel VAR Estimation, ' + str_steps + str_gmm)
         to_print.append(self.basic_information(model))
-        to_print.append(self.regression_table(model))
+        to_print.append(self.regression_table(model, reg_tables))
         to_print.append(self.test_results(model))
         for line in to_print:
             print(line)
@@ -59,14 +59,14 @@ class model_summary(object):
         basic_table.header = False
         basic_table.align = 'l'
         basic_table.add_row(
-            ['Group variable: ' + model.identifiers[0], middle_space, 'Number of obs = ' + str(model.num_obs)])
+            ['Group variable: ' + model.model_info.identifiers[0], middle_space, 'Number of obs = ' + str(model.model_info.num_obs)])
         basic_table.add_row(
-            ['Time variable: ' + model.identifiers[1], middle_space, 'Min obs per group: ' + str(model.min_obs)])
-        basic_table.add_row(['Number of instruments = ' + str(model.num_instr), middle_space,
-                             'Max obs per group: ' + str(model.max_obs)])
+            ['Time variable: ' + model.model_info.identifiers[1], middle_space, 'Min obs per group: ' + str(model.model_info.min_obs)])
+        basic_table.add_row(['Number of instruments = ' + str(model.model_info.num_instr), middle_space,
+                             'Max obs per group: ' + str(model.model_info.max_obs)])
         basic_table.add_row(
-            ['Number of groups = ' + str(model.N), middle_space,
-             'Avg obs per group: ' + '{0:.2f}'.format(model.avg_obs)])
+            ['Number of groups = ' + str(model.model_info.N), middle_space,
+             'Avg obs per group: ' + '{0:.2f}'.format(model.model_info.avg_obs)])
 
         return (basic_table.get_string())
 
@@ -85,16 +85,18 @@ class model_summary(object):
 
         return (str_toprint)
 
-    def regression_table(self, model):
+    def regression_table(self, model,regression_tables):
         r_table = PrettyTable()
-        
+
+        var_names=model.model_info.indep
+
         i = 0
         r_table.field_names = ["Equation","   ", "coef.", "Corrected Std. Err.", "z", "P>|z|", " "]
         r_table.float_format = '.7'
-        for dep in model.dep:
+        for dep in model.model_info.dep:
             r_table.add_row([dep, "","","","","",""])
-            reg_table=model.regression_tables[dep]
-            for j in range(len(model.indeps)):
+            reg_table=regression_tables[dep]
+            for j in range(len(model.model_info.indep)):
                 var_name = reg_table['variable'][j]
                 coeff = reg_table['coefficient'][j]
                 stderr = reg_table['std_err'][j]
