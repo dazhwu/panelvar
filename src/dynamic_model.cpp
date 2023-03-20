@@ -96,7 +96,7 @@ vector<returned_result> prepare_data(vector<string> &identifiers, Ref <RowMatrix
 			model_result.dep_indep = the_models[m].dep_indep;
 			model_result.model_info.model_name = "m" + std::to_string(m_num);
 			model_result.command_str = the_models[m].command_str;
-			model_result.irf.reserve(3);
+			model_result.irf.reserve(3);//[0] irf, [1] lower limit, [2] Upper limit
 			process_residual(model_result, na_records);
 			vector<RowMatrixXd> irf_result=irf(options.irf, model_result.regression_result.Residual, na_records,
 												 model_result.regression_result.beta, ahead, model_result.model_info.num_dep_lags);
