@@ -10,13 +10,11 @@ using namespace Eigen;
 using std::string;
 using std::vector;
 
-
 vector<int>
 gen_random_draws(int total_num_draws, int from, int to) {
     // generate a vector of integer that uniformly distributed between "from" and "to"
-    
-    std::random_device
-        rd;   // Will be used to obtain a seed for the random number engine
+
+    std::random_device rd;   // Will be used to obtain a seed for the random number engine
     // std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with
     // rd()
     std::minstd_rand gen(rd());
@@ -25,7 +23,7 @@ gen_random_draws(int total_num_draws, int from, int to) {
     // tbr.reserve(total_num_draws);
 #pragma omp parallel for
     for (int n = 0; n < total_num_draws; ++n)
-        
+
         tbr[n] = (distrib(gen));
 
     return (tbr);
@@ -40,7 +38,6 @@ row_has_nan(const RowMatrixXd &x) {
     }
     return tbr;
 }
-
 
 RowMatrixXd
 common_inv(Ref<RowMatrixXd> ori) {
@@ -168,8 +165,7 @@ combined_vector(std::vector<string> v1, std::vector<string> v2) {
 }
 
 void
-lag(Ref<RowMatrixXd> mat, Ref<RowMatrixXd> lagged, int N, int lag_number,
-    double fill) {
+lag(Ref<RowMatrixXd> mat, Ref<RowMatrixXd> lagged, int N, int lag_number, double fill) {
     int height = mat.rows() / N;
     int width = mat.cols();
 #pragma omp parallel for
@@ -183,10 +179,8 @@ lag(Ref<RowMatrixXd> mat, Ref<RowMatrixXd> lagged, int N, int lag_number,
         //   lagged_i.block(0, 0, lag_number, width) =
         //       RowMatrixXd::Zero(lag_number, width);
         // else
-        lagged_i.block(0, 0, lag_number, width) =
-            RowMatrixXd::Constant(lag_number, width, fill);
-        lagged_i.block(lag_number, 0, height - lag_number, width) =
-            mat_i.block(0, 0, height - lag_number, width);
+        lagged_i.block(0, 0, lag_number, width) = RowMatrixXd::Constant(lag_number, width, fill);
+        lagged_i.block(lag_number, 0, height - lag_number, width) = mat_i.block(0, 0, height - lag_number, width);
     }
 }
 
@@ -221,8 +215,7 @@ is_dep_NAs(Ref<RowMatrixXd> deps) {
 }
 
 RowMatrixXd
-get_fod_table(Ref<RowMatrixXd> ori_arr, Ref<RowMatrixXd> ori_dep, int N,
-              int type, int num_dep, int num_dep_lags) {
+get_fod_table(Ref<RowMatrixXd> ori_arr, Ref<RowMatrixXd> ori_dep, int N, int type, int num_dep, int num_dep_lags) {
     int num_cols = ori_arr.cols();
     int num_rows = ori_arr.rows();
     int height = num_rows / N;
@@ -240,10 +233,8 @@ get_fod_table(Ref<RowMatrixXd> ori_arr, Ref<RowMatrixXd> ori_dep, int N,
                 is_na[i] = dep_NAs(i, which_dep);
         }
         for (int i = 0; i < N; ++i) {
-            Ref<RowMatrixXd> ori_i =
-                ori_arr.block(i * height, col_index, height, 1);
-            Ref<RowMatrixXd> tbr_i =
-                tbr.block(i * height, col_index, height, 1);
+            Ref<RowMatrixXd> ori_i = ori_arr.block(i * height, col_index, height, 1);
+            Ref<RowMatrixXd> tbr_i = tbr.block(i * height, col_index, height, 1);
 
             // RowMatrixXd temp = RowMatrixXd::Constant(height, num_cols, NAN);
             double next_sum = NAN;
@@ -252,8 +243,7 @@ get_fod_table(Ref<RowMatrixXd> ori_arr, Ref<RowMatrixXd> ori_dep, int N,
             // for j in range(height - 2, -1, -1):
 
             for (int j = height - 2; j >= 0; --j) {
-                if (isnan(ori_i(j + 1, 0)) ||
-                    (is_na[j + 1 + (i * height)] == 1)) {
+                if (isnan(ori_i(j + 1, 0)) || (is_na[j + 1 + (i * height)] == 1)) {
                     this_count = next_count;
                     this_sum = next_sum;
                     if (j < height - 2)
@@ -274,8 +264,7 @@ get_fod_table(Ref<RowMatrixXd> ori_arr, Ref<RowMatrixXd> ori_dep, int N,
                     // std:://cout << this_sum << std::endl;
                     // this_avg = this_sum * (1.0 / this_count);
                     tbr_i(j + 1, 0) =
-                        (ori_i(j, 0) - this_sum * (1.0 / this_count)) *
-                        sqrt(this_count * 1.0 / (this_count + 1));
+                        (ori_i(j, 0) - this_sum * (1.0 / this_count)) * sqrt(this_count * 1.0 / (this_count + 1));
                 }
                 next_sum = this_sum;
                 next_count = this_count;

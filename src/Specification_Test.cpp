@@ -1,31 +1,23 @@
 #include "Specification_Test.h"
 
+VectorXcd
+stability_test(RowMatrixXd &beta, int lags) {
+    // cols(): num of dep     rows(): num of indep
 
-VectorXcd stability_test(RowMatrixXd &beta, int lags){
-// cols(): num of dep     rows(): num of indep
-  
-  
-  RowMatrixXd tbp=PAR1_matrix(beta, lags);
-  
-  VectorXcd eivals = (tbp.transpose()).eigenvalues();
+    RowMatrixXd tbp = PAR1_matrix(beta, lags);
 
+    VectorXcd eivals = (tbp.transpose()).eigenvalues();
 
-  return (eivals);
-
-
+    return (eivals);
 }
 
+Hansen_test_info::Hansen_test_info() {}
+Hansen_test_info::Hansen_test_info(double _test, int _df, double _cri, double _p) {
+    test_value = _test;
+    df = _df;
 
-Hansen_test_info::Hansen_test_info(){
-
-}
-Hansen_test_info::Hansen_test_info(double _test, int _df, double _cri,
-                                   double _p) {
-  test_value = _test;
-  df = _df;
-
-  critical_value = _cri;
-  P_value = _p;
+    critical_value = _cri;
+    P_value = _p;
 }
 
 // AR_test_info::AR_test_info(){
@@ -37,23 +29,20 @@ Hansen_test_info::Hansen_test_info(double _test, int _df, double _cri,
 //   P_value = _P;
 // }
 
+Hansen_test_info
+hansen_overid(const Ref<const RowMatrixXd> &W2_inv, const Ref<const RowMatrixXd> &zs, int num_instru, int num_indep,
+              int N) {
 
-Hansen_test_info hansen_overid(const Ref<const RowMatrixXd> &W2_inv,
-                               const Ref<const RowMatrixXd> &zs, int num_instru,
-                               int num_indep,  int N) {
+    double hansen_test = (zs.transpose() * W2_inv * zs).value() * (1.0 / N);
+    int df = num_instru - num_indep;
+    boost::math::chi_squared k2(df);
 
-  double hansen_test = (zs.transpose() * W2_inv * zs).value() * (1.0 / N);
-  int df = num_instru - num_indep;
-  boost::math::chi_squared k2(df);
-
-  
-  // double crit=
-  // struct Hansen_test_info tbr={hansen_test, df};
-  return Hansen_test_info(hansen_test, df, boost::math::pdf(k2, 0.95),
-                          1 - boost::math::cdf(k2, hansen_test));
+    // double crit=
+    // struct Hansen_test_info tbr={hansen_test, df};
+    return Hansen_test_info(hansen_test, df, boost::math::pdf(k2, 0.95), 1 - boost::math::cdf(k2, hansen_test));
 }
 
-// vector<MatrixXd> AR_get_diff_XR(int N, 
+// vector<MatrixXd> AR_get_diff_XR(int N,
 //                                 std::unordered_map<string, RowMatrixXd> &final_xy_tables,
 //                                 Eigen::Ref<RowMatrixXd> beta,
 //                                 Eigen::Ref<RowMatrixXd> ori_residual,
@@ -67,9 +56,9 @@ Hansen_test_info hansen_overid(const Ref<const RowMatrixXd> &W2_inv,
 
 //       Eigen::Ref<RowMatrixXd> Diff_y_table=final_xy_tables["Diff_y"];
 //       Eigen::Ref<RowMatrixXd> Diff_x_table=final_xy_tables["Diff_x"];
-  
+
 //     MatrixXd diff_r = Diff_y_table - Diff_x_table * beta; //(diff_width * N, 1)
-    
+
 //     tbr.push_back(Diff_x_table);
 //     ////saveData("Diff_r.csv", diff_r);
 //     tbr.push_back(diff_r);
@@ -105,7 +94,6 @@ Hansen_test_info hansen_overid(const Ref<const RowMatrixXd> &W2_inv,
 //         int diff_width, string transformation,
 //         bool level) {
 
-  
 //   int z_height = z_list.rows() / N;
 
 //   int r0_height = ori_residual.rows() / N;

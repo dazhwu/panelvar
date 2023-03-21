@@ -3,40 +3,38 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "pvar.h"
-#include "info.h"
+#include "Command.h"
+#include "Common_Functions.h"
 #include "GMM.h"
 #include "List_Variables.h"
-#include "variable.h"
-#include "Command.h"
-#include "instruments.h"
-#include "Common_Functions.h"
 #include "dynamic_model.h"
+#include "info.h"
+#include "instruments.h"
+#include "pvar.h"
+#include "variable.h"
 
 namespace py = pybind11;
 
-
-PYBIND11_MODULE(pvar_module, m)
-{
+PYBIND11_MODULE(pvar_module, m) {
 
     using RowMatrixXd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
     py::class_<model_options>(m, "model_options")
         .def(py::init<>())
         .def_readwrite("steps", &model_options::steps)
-		.def_readwrite("constant", &model_options::constant)
+        .def_readwrite("constant", &model_options::constant)
         .def_readwrite("level", &model_options::level)
         .def_readwrite("beginner", &model_options::beginner)
         .def_readwrite("timedumm", &model_options::timedumm)
         .def_readwrite("collapse", &model_options::collapse)
         .def_readwrite("mmsc", &model_options::mmsc)
-		.def_readwrite("irf", &model_options::irf)
+        .def_readwrite("irf", &model_options::irf)
         .def_readwrite("transformation", &model_options::transformation);
-
 
     py::class_<Regression>(m, "Regression")
         .def(py::init<>())
-        .def(py::init<RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, Ref<RowMatrixXd> , Ref<RowMatrixXd>, Ref<RowMatrixXd>, RowMatrixXd &>())
+        .def(py::init<RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, Ref<RowMatrixXd>, Ref<RowMatrixXd>,
+                      Ref<RowMatrixXd>, RowMatrixXd &>())
         .def_readwrite("beta", &Regression::beta)
         .def_readwrite("vcov", &Regression::vcov)
         .def_readwrite("std_err", &Regression::std_err)
@@ -46,11 +44,12 @@ PYBIND11_MODULE(pvar_module, m)
         .def_readwrite("Instruments", &Regression::Instruments)
         .def_readwrite("Y", &Regression::Cy)
         .def_readwrite("X", &Regression::Cx)
-		.def_readwrite("Residual", &Regression::Residual);
+        .def_readwrite("Residual", &Regression::Residual);
 
     py::class_<basic_info>(m, "basic_info")
         .def(py::init<>())
-        .def(py::init<int, int, int, int, int, int, int,int,int, int, int, double, vector<regular_variable> &, vector<string> &, model_options &>())
+        .def(py::init<int, int, int, int, int, int, int, int, int, int, int, double, vector<regular_variable> &,
+                      vector<string> &, model_options &>())
         .def_readwrite("model_name", &basic_info::model_name)
         .def_readwrite("identifiers", &basic_info::identifiers)
         .def_readwrite("dep", &basic_info::dep)
@@ -64,8 +63,8 @@ PYBIND11_MODULE(pvar_module, m)
         .def_readwrite("num_dep_lags", &basic_info::num_dep_lags)
         .def_readwrite("num_indep", &basic_info::num_indep)
         .def_readwrite("diff_width", &basic_info::diff_width)
-		.def_readwrite("x_height", &basic_info::x_height)
-		.def_readwrite("max_obs", &basic_info::max_obs)
+        .def_readwrite("x_height", &basic_info::x_height)
+        .def_readwrite("max_obs", &basic_info::max_obs)
         .def_readwrite("min_obs", &basic_info::min_obs)
         .def_readwrite("avg_obs", &basic_info::avg_obs)
         .def_readwrite("SS", &basic_info::SS)
@@ -95,9 +94,9 @@ PYBIND11_MODULE(pvar_module, m)
         .def_readwrite("adjustable_max_lags", &List_Variables::adjustable_max_lags);
 
     py::class_<Step_Result>(m, "Step_Result")
-        .def(py::init<RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &,
+        .def(py::init<RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &,
                       RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &, RowMatrixXd &,
-                      RowMatrixXd &, RowMatrixXd &, RowMatrixXd &>())
+                      RowMatrixXd &>())
         .def_readwrite("residual", &Step_Result::residual)
         .def_readwrite("_residual_t", &Step_Result::_residual_t)
         .def_readwrite("XZ_W", &Step_Result::XZ_W)
@@ -111,9 +110,8 @@ PYBIND11_MODULE(pvar_module, m)
         .def_readwrite("M", &Step_Result::M)
         .def_readwrite("_zs_list", &Step_Result::_zs_list)
         .def_readwrite("beta", &Step_Result::beta)
-//.def_readwrite("SS", &Step_Result::SS)
+        //.def_readwrite("SS", &Step_Result::SS)
         .def_readwrite("std_err", &Step_Result::std_err);
-
 
     // py::class_<AR_test_info>(m, "AR_test_info")
     //     .def(py::init<>())
@@ -131,8 +129,8 @@ PYBIND11_MODULE(pvar_module, m)
         .def_readwrite("P_value", &Hansen_test_info::P_value);
 
     py::class_<df_info>(m, "df_info")
-		.def(py::init<>())
-		.def(py::init<int, int, int, int, int , int , int >())
+        .def(py::init<>())
+        .def(py::init<int, int, int, int, int, int, int>())
         .def_readwrite("N", &df_info::N)
         .def_readwrite("T", &df_info::T)
         //.def_readwrite("ids", &df_info::ids)
@@ -162,8 +160,8 @@ PYBIND11_MODULE(pvar_module, m)
         .def_readwrite("AIC", &MMSC_LU::AIC);
 
     py::class_<returned_result>(m, "returned_result")
-        .def(py::init<struct Regression &, Hansen_test_info &, VectorXcd &,
-                       struct basic_info &, struct model_options &, string>())        
+        .def(py::init<struct Regression &, Hansen_test_info &, VectorXcd &, struct basic_info &, struct model_options &,
+                      string>())
         .def_readwrite("dep_indep", &returned_result::dep_indep)
         .def_readwrite("regression_result", &returned_result::regression_result)
         .def_readwrite("hansen", &returned_result::hansen)
@@ -171,10 +169,10 @@ PYBIND11_MODULE(pvar_module, m)
         //.def_readwrite("AR_list", &returned_result::AR_list)
         .def_readwrite("model_info", &returned_result::model_info)
         .def_readwrite("model_options", &returned_result::model_options)
-		.def_readwrite("irf", &returned_result::irf)
+        .def_readwrite("irf", &returned_result::irf)
         .def_readwrite("command_str", &returned_result::command_str);
 
-    //m.def("AR_test", &AR_test);
+    // m.def("AR_test", &AR_test);
     m.def("process_command", &process_command);
     m.def("regular_process", &regular_process);
     m.def("get_z_table", &get_z_table);
@@ -182,7 +180,10 @@ PYBIND11_MODULE(pvar_module, m)
 }
 
 /*
-g++  -O3 -Wall -shared -std=c++17 -fopenmp  -mavx2 `python3 -m pybind11 --includes` -I/usr/local/include -I/usr/include/eigen3 `python3-config --ldflags` -o gmm_module.so GMM.cpp info.cpp Specification_Test.cpp Step_Result.cpp Common_Functions.cpp wrap.cpp Command.cpp List_Variables.cpp instruments.cpp dynamic_model.cpp variable.cpp
+g++  -O3 -Wall -shared -std=c++17 -fopenmp  -mavx2 `python3 -m pybind11 --includes` -I/usr/local/include
+-I/usr/include/eigen3 `python3-config --ldflags` -o gmm_module.so GMM.cpp info.cpp Specification_Test.cpp
+Step_Result.cpp Common_Functions.cpp wrap.cpp Command.cpp List_Variables.cpp instruments.cpp dynamic_model.cpp
+variable.cpp
 
 
 

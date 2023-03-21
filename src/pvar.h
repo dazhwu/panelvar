@@ -1,16 +1,15 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <algorithm>
-#include <math.h>
-#include <iostream>
-#include <math.h>
-#include <vector>
-#include <string>
-#include <tuple>
 #include <cstring>
 #include <fstream>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <tuple>
+#include <vector>
 
 // #define EIGEN_USE_MKL_ALL
 // #define EIGEN_INITIALIZE_MATRICES_BY_ZERO
@@ -18,9 +17,9 @@
 // #define EIGEN_USE_LAPACKE
 
 #include <Eigen/Core>
-#include <Eigen/StdVector>
-#include <Eigen/QR>
 #include <Eigen/LU>
+#include <Eigen/QR>
+#include <Eigen/StdVector>
 
 using std::cout;
 using std::endl;

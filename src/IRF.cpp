@@ -2,10 +2,10 @@
 
 RowMatrixXd
 PAR1_matrix(RowMatrixXd &beta, int lags) {
-    //return a "long" matrix cols(): num of dep     rows(): num of indep
+    // return a "long" matrix cols(): num of dep     rows(): num of indep
 
     int num_dep = beta.cols();
-    int num_indep = num_dep * lags;    
+    int num_indep = num_dep * lags;
 
     RowMatrixXd tbp = RowMatrixXd::Zero(num_indep, num_indep);
 
@@ -78,27 +78,25 @@ irf(string method, RowMatrixXd &residual, VectorXi &is_na, RowMatrixXd &beta, in
 
 RowMatrixXd
 oirf(RowMatrixXd &residual, VectorXi &is_na, RowMatrixXd &beta, int ahead, int lags) {
-    
-	vector<RowMatrixXd> ma_phi = IRF_matrix(beta, ahead, lags);
-	int num_dep = residual.cols();
+
+    vector<RowMatrixXd> ma_phi = IRF_matrix(beta, ahead, lags);
+    int num_dep = residual.cols();
     RowMatrixXd cov = vcov_residual(residual, is_na);
-    
-	RowMatrixXd p = cov.llt().matrixU();    
+
+    RowMatrixXd p = cov.llt().matrixU();
 
     vector<RowMatrixXd> MA_Phi_P(ahead);
-    
-    for (int i0 = 0; i0 < ahead; ++i0)         
-        MA_Phi_P[i0]=p * ma_phi[i0];
-    
-    
+
+    for (int i0 = 0; i0 < ahead; ++i0)
+        MA_Phi_P[i0] = p * ma_phi[i0];
 
     return (calculate_irf_matrix(num_dep, ahead, MA_Phi_P));
 }
 
 RowMatrixXd
 girf(RowMatrixXd &residual, VectorXi &is_na, RowMatrixXd &beta, int ahead, int lags) {
-    
-	vector<RowMatrixXd> ma_phi = IRF_matrix(beta, ahead, lags);
+
+    vector<RowMatrixXd> ma_phi = IRF_matrix(beta, ahead, lags);
     int num_dep = residual.cols();
     RowMatrixXd cov = vcov_residual(residual, is_na);
 
@@ -106,7 +104,7 @@ girf(RowMatrixXd &residual, VectorXi &is_na, RowMatrixXd &beta, int ahead, int l
     for (int i = 0; i < num_dep; ++i)
         sigmas[i] = 1 / sqrt(cov(i, i));
 
-    vector<RowMatrixXd> MA_Phi_P(ahead);  //a vector of matrices, dimention: 
+    vector<RowMatrixXd> MA_Phi_P(ahead);   // a vector of matrices, dimention:
 
     for (int i0 = 0; i0 < ahead; ++i0) {
 
@@ -118,24 +116,21 @@ girf(RowMatrixXd &residual, VectorXi &is_na, RowMatrixXd &beta, int ahead, int l
         MA_Phi_P[i0] = temp_mat;
     }
 
-
-
     return (calculate_irf_matrix(num_dep, ahead, MA_Phi_P));
 }
 
-RowMatrixXd calculate_irf_matrix(int num_dep, int ahead, vector<RowMatrixXd> &MA_Phi_P){
-    
-	RowMatrixXd tbr(ahead, num_dep*num_dep);    
-	
-	#pragma omp parallel for
+RowMatrixXd
+calculate_irf_matrix(int num_dep, int ahead, vector<RowMatrixXd> &MA_Phi_P) {
+
+    RowMatrixXd tbr(ahead, num_dep * num_dep);
+
+#pragma omp parallel for
     for (int i0 = 0; i0 < num_dep; ++i0) {
         // RowMatrixXd temp_mat(ahead, num_dep);
         for (int i = 0; i < ahead; ++i)
-            tbr.block(i,i0*num_dep,1, num_dep ) = MA_Phi_P[i].row(i0);
+            tbr.block(i, i0 * num_dep, 1, num_dep) = MA_Phi_P[i].row(i0);
 
         // cout <<temp_mat << endl;
-        
     }
-	return(tbr);
-
+    return (tbr);
 }

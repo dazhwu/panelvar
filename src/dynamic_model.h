@@ -53,8 +53,7 @@ void prepare_reg_fod(Ref<RowMatrixXd> Diff_x, Ref<RowMatrixXd> Diff_y);
 std::tuple<int, int, int, double> prepare_reg(Ref<RowMatrixXd> z_list, Ref<RowMatrixXd> Cx, Ref<RowMatrixXd> Cy,
                                               VectorXi &, z_info, string transformation, bool level);
 
-std::tuple<RowMatrixXd, RowMatrixXd> Bootstrapping(string, int, int, Ref<RowMatrixXd> z_table,
-                                                                   VectorXi &na_records, temp_result &tmp_res,
-                                                                   struct basic_info &model_info,
-                                                                   struct model_options &options);
-std::tuple<RowMatrixXd, RowMatrixXd>  choose_U_L(vector<RowMatrixXd> &All_Mats, int num_draws, int num_dep, int ahead);
+std::tuple<RowMatrixXd, RowMatrixXd> Bootstrapping(string, int, int, Ref<RowMatrixXd> z_table, VectorXi &na_records,
+                                                   temp_result &tmp_res, struct basic_info &model_info,
+                                                   struct model_options &options);
+std::tuple<RowMatrixXd, RowMatrixXd> choose_U_L(vector<RowMatrixXd> &All_Mats, int num_draws, int num_dep, int ahead);

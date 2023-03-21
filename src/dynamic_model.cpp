@@ -453,40 +453,34 @@ Bootstrapping(string method, int num_draws, int ahead, Ref<RowMatrixXd> z_table,
         std::tie(beta, residual) =
             special_process(pseudo_z_list, pseudo_Cx_list, pseudo_Cy_list, pseudo_t_res, model_info, options);
         All_Mats[i] = irf(method, residual, pseudo_na_records, beta, ahead, model_info.num_dep_lags);
-    } 
+    }
 
-    
     return choose_U_L(All_Mats, num_draws, model_info.num_dep, ahead);
 }
 
 std::tuple<RowMatrixXd, RowMatrixXd>
-choose_U_L(vector<RowMatrixXd> &All_Mats,  int num_draws, int num_dep,
-           int ahead) {
+choose_U_L(vector<RowMatrixXd> &All_Mats, int num_draws, int num_dep, int ahead) {
 
     int L = num_draws * 0.025 - 1;
     int U = num_draws * 0.975 - 1;
 
-    RowMatrixXd upper(ahead, num_dep*num_dep);
-    RowMatrixXd lower(ahead, num_dep*num_dep);
+    RowMatrixXd upper(ahead, num_dep * num_dep);
+    RowMatrixXd lower(ahead, num_dep * num_dep);
 
-    for(int i=0; i<ahead; ++i){
-        for (int j=0; j<num_dep*num_dep;++j){
+    for (int i = 0; i < ahead; ++i) {
+        for (int j = 0; j < num_dep * num_dep; ++j) {
             vector<double> temp(num_draws);
-            for(int m=0; m<num_draws; ++m)
-                temp[m]=(All_Mats[m])(i,j);
+            for (int m = 0; m < num_draws; ++m)
+                temp[m] = (All_Mats[m])(i, j);
             std::nth_element(temp.begin(), temp.begin() + L, temp.end());
-            
-                lower(i, j) = temp[L];
 
-                std::nth_element(temp.begin(), temp.begin() + U, temp.end());
-                
+            lower(i, j) = temp[L];
 
-                upper(i, j) = temp[U];
-            
+            std::nth_element(temp.begin(), temp.begin() + U, temp.end());
+
+            upper(i, j) = temp[U];
+        }
     }
-    }
-    
 
-return std::make_tuple(lower, upper);
-    
+    return std::make_tuple(lower, upper);
 }
