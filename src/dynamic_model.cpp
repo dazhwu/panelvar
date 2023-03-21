@@ -453,15 +453,7 @@ Bootstrapping(string method, int num_draws, int ahead, Ref<RowMatrixXd> z_table,
         std::tie(beta, residual) =
             special_process(pseudo_z_list, pseudo_Cx_list, pseudo_Cy_list, pseudo_t_res, model_info, options);
         All_Mats[i] = irf(method, residual, pseudo_na_records, beta, ahead, model_info.num_dep_lags);
-    }
-
-    
-    // upper.reserve(model_info.num_dep);
-    // lower.reserve(model_info.num_dep);
-    // for (int i = 0; i < model_info.num_dep; ++i) {
-    //     upper.push_back(RowMatrixXd::Zero(ahead, model_info.num_dep));
-    //     lower.push_back(RowMatrixXd::Zero(ahead, model_info.num_dep));
-    // }
+    } 
 
     
     return choose_U_L(All_Mats, num_draws, model_info.num_dep, ahead);

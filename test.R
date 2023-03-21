@@ -18,3 +18,9 @@ p1 <-pvargmm(
   progressbar = FALSE
 )
 summary(p1)
+
+girf(p1, n.ahead = 8, ma_approx_steps= 8)
+ex1_dahlberg_data_bs <- bootstrap_irf(p1, typeof_irf = c("GIRF"),
+                                      n.ahead = 8,
+                                      nof_Nstar_draws = 200,
+                                      confidence.band = 0.95)

@@ -101,8 +101,8 @@ class pvar:
         num_dep=model.model_info.num_dep;
         plt.rcParams.update({'font.size': 22})
         x = (np.arange(0, ahead).reshape(ahead, 1))[:, 0]
-        for i in range(0, num_dep):  # matrix
-            for j in range(0, num_dep):  # column
+        for i in range(0, num_dep):  #from
+            for j in range(0, num_dep):  #to
                 # fig = plt.figure()
                 # ax = fig.add_subplot(1, 1, 1)
                 y = model.irf[0][:, i*num_dep+j]
