@@ -97,16 +97,17 @@ class pvar:
     def plot_irf(self, model):
         print("plot_irf")
 
-        ahead=model.irf[0][0].shape[0]
+        ahead=model.irf[0].shape[0]
+        num_dep=model.model_info.num_dep;
         plt.rcParams.update({'font.size': 22})
         x = (np.arange(0, ahead).reshape(ahead, 1))[:, 0]
-        for i in range(0, model.model_info.num_dep):  # matrix
-            for j in range(0, model.model_info.num_dep):  # column
+        for i in range(0, num_dep):  # matrix
+            for j in range(0, num_dep):  # column
                 # fig = plt.figure()
                 # ax = fig.add_subplot(1, 1, 1)
-                y = model.irf[0][i][:, j]
-                l = model.irf[1][i][:, j]
-                u = model.irf[2][i][:, j]
+                y = model.irf[0][:, i*num_dep+j]
+                l = model.irf[1][:, i*num_dep+j]
+                u = model.irf[2][:, i*num_dep+j]
                 print("image")
                 fig, ax = plt.subplots()
                 fig.set_figwidth(20)

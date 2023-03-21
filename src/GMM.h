@@ -17,7 +17,7 @@
 class returned_result {
 public:
 	struct Regression regression_result;
-	vector<vector<RowMatrixXd>> irf;
+	vector<RowMatrixXd> irf;
 	Hansen_test_info hansen;
 	//vector<AR_test_info> AR_list;
 	VectorXcd stability;

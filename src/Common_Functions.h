@@ -5,6 +5,7 @@
 #ifndef UNTITLED_COMMON_FUNCTIONS_H
 #define UNTITLED_COMMON_FUNCTIONS_H
 
+#include <random>
 #include "pvar.h"
 //#include "List_Variables.h"
 
@@ -32,6 +33,7 @@ RowMatrixXd get_first_diff_table(Ref<RowMatrixXd> ori_arr, int N);
 MatrixXi is_dep_NAs(Ref<RowMatrixXd> deps);
 
 
+vector<int> gen_random_draws(int total_num_draws, int from, int to);
 
 RowMatrixXd get_fod_table(Ref<RowMatrixXd> ori_arr, Ref<RowMatrixXd> ori_dep,
                           int N, int type, int num_dep, int num_dep_lags);
@@ -40,5 +42,7 @@ RowMatrixXd get_fod_table(Ref<RowMatrixXd> ori_arr, Ref<RowMatrixXd> ori_dep,
 void saveRef2CSV(string fileName, Ref<RowMatrixXd> matrix);
 
 void saveData(string fileName, RowMatrixXd  &matrix);
+
+
 
 #endif //UNTITLED_COMMON_FUNCTIONS_H
