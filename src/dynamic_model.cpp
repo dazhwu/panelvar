@@ -408,11 +408,12 @@ Bootstrapping(string method, int num_draws, int ahead, Ref<RowMatrixXd> z_table,
     vector<int> ids = gen_random_draws(N * num_draws, 0, N - 1);
     vector<RowMatrixXd> All_Mats(num_draws);
 
-    Ref<RowMatrixXd> Cx_list = final_xy_tables["Cx"];
+    Ref<RowMatrixXd> Cx_list = final_xy_tables["Cx"];  //final_xy_tables is a dictionary at the module level --> change to local?
     Ref<RowMatrixXd> Cy_list = final_xy_tables["Cy"];
     // #pragma omp parallel for
     for (int i = 0; i < num_draws; ++i) {
-        cout << "bootstrapping " << i << endl;
+        cout << "bootstrapping " << i << " of " << num_draws <<'\r';
+        cout.flush();
         RowMatrixXd pseudo_Cx_list, pseudo_Cy_list, pseudo_z_list;
         RowMatrixXd pseudo_xz_list, pseudo_zy_list, pseudo_zHz_list;
 
@@ -454,7 +455,7 @@ Bootstrapping(string method, int num_draws, int ahead, Ref<RowMatrixXd> z_table,
             special_process(pseudo_z_list, pseudo_Cx_list, pseudo_Cy_list, pseudo_t_res, model_info, options);
         All_Mats[i] = irf(method, residual, pseudo_na_records, beta, ahead, model_info.num_dep_lags);
     }
-
+    cout << endl;
     return choose_U_L(All_Mats, num_draws, model_info.num_dep, ahead);
 }
 
