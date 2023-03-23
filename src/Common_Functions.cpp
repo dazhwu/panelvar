@@ -18,7 +18,7 @@ gen_random_draws(int total_num_draws, int from, int to) {
     std::uniform_int_distribution<int> distrib(from, to);
 
     vector<int> tbr(total_num_draws);
-//#pragma omp parallel for
+//#pragma omp parallel for  <--- CANNOT use this; otherwise, randome seed won't work and results cannot be reproduced
     for (int n = 0; n < total_num_draws; ++n)
         tbr[n] = (distrib(gen));
 
