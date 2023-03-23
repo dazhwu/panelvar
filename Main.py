@@ -18,6 +18,8 @@ for i in range(1):
         mydpd.form_results(m)
         print(m.command_str)
         print(m.irf[0])
+        print(m.irf[1])
+        print(m.irf[2])
         mydpd.plot_irf(m)
  #   print(mydpd.list_models[0].regression_result.beta)
  #   print(mydpd.list_models[0].regression_result.std_err)

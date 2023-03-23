@@ -12,18 +12,14 @@ using std::vector;
 
 vector<int>
 gen_random_draws(int total_num_draws, int from, int to) {
-    // generate a vector of integer that uniformly distributed between "from" and "to"
+    // generate a vector of integers that are uniformly distributed between "from" and "to"
 
-    std::random_device rd;   // Will be used to obtain a seed for the random number engine
-    // std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with
-    // rd()
-    std::minstd_rand gen(rd());
-    std::uniform_int_distribution<> distrib(from, to);
+    std::default_random_engine gen(123);
+    std::uniform_int_distribution<int> distrib(from, to);
+
     vector<int> tbr(total_num_draws);
-    // tbr.reserve(total_num_draws);
 #pragma omp parallel for
     for (int n = 0; n < total_num_draws; ++n)
-
         tbr[n] = (distrib(gen));
 
     return (tbr);
