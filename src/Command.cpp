@@ -9,6 +9,8 @@ List_Variables LGMM_list;
 List_Variables DGMM_list;
 
 struct model_options options;
+//list_variables and options are shared among modules
+
 int DEP_lags;
 
 std::tuple<vector<string>, struct model_options>
